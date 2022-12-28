@@ -14,6 +14,7 @@ function processLogs(logs, maxSpan) {
 
   // Creo un objeto para almacenar los tiempos de inicio de sesión de cada usuario
   let sessionTimes = {};
+  //Creo un array para almacenar los ids de los usuarios que cumplen con la condición
   let result = [];
 
   // Recorro el arreglo de logs y almaceno los tiempos de inicio de sesión en el objeto sessionTimes
@@ -23,17 +24,15 @@ function processLogs(logs, maxSpan) {
     let time = log[1];
     let action = log[2];
 
-    if (action === "sign-in") {
-      sessionTimes[id] = time;
-    }
 
-    if (
-      action === "sign-out" &&
-      sessionTimes[id] &&
-      time - sessionTimes[id] < maxSpan
-    ) {
-      result.push(id);
+    if (action === "sign-in") {
+     console.log (sessionTimes[id] = time);
     }
+    // Si el usuario se desconecta, compruebo si el tiempo de desconexión es menor al tiempo de conexión y el máximo de minutos permitidos
+    if (
+      action === "sign-out" && sessionTimes[id] && time - sessionTimes[id] < maxSpan
+    )
+      result.push(id);
   }
 
   return result;
